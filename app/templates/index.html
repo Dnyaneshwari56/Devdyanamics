@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Event Planner</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Smart Event Planner</h1>
+    <form method="post" action="/check">
+        <label>Event Name: <input type="text" name="name" required></label><br>
+        <label>Location: <input type="text" name="location" required></label><br>
+        <label>Date: <input type="date" name="event_date" required></label><br>
+        <label>Event Type:
+            <select name="event_type" required>
+                <option value="cricket">Cricket</option>
+                <option value="wedding">Wedding</option>
+                <option value="hiking">Hiking</option>
+                <option value="corporate">Corporate</option>
+                <option value="other">Other</option>
+            </select>
+        </label><br>
+        <button type="submit">Check Weather & Suitability</button>
+    </form>
+
+    {% if error %}
+        <div class="error">
+            <h2>Error</h2>
+            <p>{{ error }}</p>
+        </div>
+    {% endif %}
+
+    {% if weather and 'error' not in weather and weather.temperature is defined and weather.temperature is not none %}
+        <div class="results">
+            <h2>Weather Details</h2>
+            <ul>
+                <li>Temperature: {{ weather.temperature | default('N/A') }} °C</li>
+                <li>Precipitation: {{ weather.precipitation | default('N/A') }} mm</li>
+                <li>Wind Speed: {{ weather.wind_speed | default('N/A') }} m/s</li>
+                <li>Conditions: {{ weather.conditions | default('N/A') }}</li>
+                <li>Humidity: {{ weather.humidity | default('N/A') }}%</li>
+                {% if weather.time %}
+                <li>Time: {{ weather.time | default('N/A') }}</li>
+                {% endif %}
+            </ul>
+
+            {% if score is defined %}
+                <h2>Weather Suitability</h2>
+                <div class="suitability">
+                    <p>Score: {{ score | default('N/A') }}/100</p>
+                    <p>Rating: {{ suitability | default('N/A') }}</p>
+                    {% if recommendation %}
+                        <p>Recommendation: {{ recommendation | default('N/A') }}</p>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            {% if alternatives and not error_alternatives %}
+                <h2>Alternative Dates</h2>
+                <div class="alternatives">
+                    {% for alt in alternatives %}
+                        <div class="alternative-date">
+                            <h3>Date: {{ alt.date | default('N/A') }}</h3>
+                            <ul>
+                                <li>Temperature: {{ alt.weather.temperature | default('N/A') }} °C</li>
+                                <li>Precipitation: {{ alt.weather.precipitation | default('N/A') }} mm</li>
+                                <li>Wind Speed: {{ alt.weather.wind_speed | default('N/A') }} m/s</li>
+                                <li>Conditions: {{ alt.weather.conditions | default('N/A') }}</li>
+                                <li>Score: {{ alt.score | default('N/A') }}/100</li>
+                                <li>Rating: {{ alt.suitability | default('N/A') }}</li>
+                            </ul>
+                            {% if alt.recommendation %}
+                                <p>Recommendation: {{ alt.recommendation | default('N/A') }}</p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if error_alternatives %}
+                <div class="error">
+                    <h2>Alternative Dates Error</h2>
+                    <p>{{ error_alternatives }}</p>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+</body>
+</html> 

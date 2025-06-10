@@ -1,0 +1,60 @@
+body { font-family: Arial, sans-serif; background: #f8f8f8; margin: 0; padding: 2em; }
+h1 { color: #2c3e50; }
+form { background: #fff; padding: 1em 2em; border-radius: 8px; box-shadow: 0 2px 8px #ccc; max-width: 400px; margin-bottom: 2em; }
+label { display: block; margin: 1em 0 0.5em; }
+input, select { width: 100%; padding: 0.5em; margin-top: 0.2em; }
+button { background: #3498db; color: #fff; border: none; padding: 0.7em 1.5em; border-radius: 4px; cursor: pointer; margin-top: 1em; }
+button:hover { background: #217dbb; }
+.results {
+    max-width: 800px;
+    margin: 0 auto;
+}
+ul { background: #fff; padding: 1em; border-radius: 8px; box-shadow: 0 2px 8px #ccc; max-width: 400px; }
+h2 { color: #2980b9; margin-top: 1.5em; }
+.error {
+    background: #ffebee;
+    color: #c62828;
+    padding: 1em;
+    border-radius: 8px;
+    margin: 1em 0;
+}
+.suitability {
+    background: #fff;
+    padding: 1em;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px #ccc;
+    margin: 1em 0;
+}
+.alternatives {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1em;
+    margin-top: 1em;
+}
+.alternative-date {
+    background: #fff;
+    padding: 1em;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px #ccc;
+}
+.alternative-date h3 {
+    color: #2980b9;
+    margin-top: 0;
+}
+.alternative-date ul {
+    max-width: none;
+    margin: 0.5em 0;
+}
+.date-help {
+    display: block;
+    color: #666;
+    font-size: 0.9em;
+    margin-top: 0.3em;
+    font-style: italic;
+}
+input[type="date"]:invalid {
+    border-color: #ff6b6b;
+}
+input[type="date"]:invalid + .date-help {
+    color: #ff6b6b;
+} 
